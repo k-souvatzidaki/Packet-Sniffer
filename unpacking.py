@@ -6,8 +6,10 @@ def formatting_MAC(i):
 
 # IPv4 address formatting
 def formatting_IPv4(i):
-    #TODO
-    return i
+    addr = str(i[0])
+    for k in range (1,4):
+        addr = addr + "."+str(i[k])
+    return addr
 
 # convert bytes to hexadecimal 
 def hex(i):
