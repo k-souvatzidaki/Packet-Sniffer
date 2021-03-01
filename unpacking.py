@@ -1,20 +1,4 @@
-import struct, binascii
-
-# MAC address formatting
-def formatting_MAC(i):
-    return '-'.join(a+b for a,b in zip(i[::2], i[1::2]))
-
-# IPv4 address formatting
-def formatting_IPv4(i):
-    addr = str(i[0])
-    for k in range (1,4):
-        addr = addr + "."+str(i[k])
-    return addr
-
-# convert bytes to hexadecimal 
-def hex(i):
-    return binascii.hexlify(i).upper()
-
+import struct, binascii, formatting
 
 # LAYER 2 : DATA LINK LAYER - MAC 
 # Header format: 
@@ -24,10 +8,10 @@ def hex(i):
 def unpack_MAC(data):
     #unpack the MAC header
     dst, src , ethertype = struct.unpack('!6s6s2s',data[:14]) 
-    dst_hex = hex(dst)
-    src_hex = hex(src)
+    dst_hex = formatting.hex(dst)
+    src_hex = formatting.hex(src)
     #return destination and source in hexadecimal, ethertype as an intiger and the MAC payload
-    return formatting_MAC(dst_hex), formatting_MAC(src_hex), int(hex(ethertype),16), data[14:]
+    return formatting.MAC(dst_hex), formatting.MAC(src_hex), int(formatting.hex(ethertype),16), data[14:]
 
 
 # LAYER 3: NETWORK
@@ -48,8 +32,8 @@ def unpack_MAC(data):
 def unpack_IPv4(data):
     #unpack the IPv4 header
     src, dst= struct.unpack('!12x4s4s',data[:20]) 
-    formatted_src = formatting_IPv4(struct.unpack('{}B'.format(len(src)),src))
-    formatted_dst = formatting_IPv4(struct.unpack('{}B'.format(len(dst)),dst))
+    formatted_src = formatting.IPv4(struct.unpack('{}B'.format(len(src)),src))
+    formatted_dst = formatting.IPv4(struct.unpack('{}B'.format(len(dst)),dst))
     #return formatted destination and source
     return formatted_src,formatted_dst
 
