@@ -1,12 +1,10 @@
 import struct, binascii, formatting, ports_types
 
-# LAYER 2 : DATA LINK LAYER 
-
+# ============== LAYER 2: DATA LINK ================
 # MAC 
 # Header format: 
 #  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 # |   MAC dst(48 bits)  |  MAC src(48 bits)  | Ethertype(16 bits) |
-
 def unpack_MAC(data):
     #unpack the MAC header
     dst, src , ethertype = struct.unpack('!6s6s2s',data[:14]) 
@@ -16,8 +14,7 @@ def unpack_MAC(data):
     return formatting.MAC(dst_hex), formatting.MAC(src_hex), int(formatting.b2hex(ethertype),16), data[14:]
 
 
-# LAYER 3: NETWORK
-
+# ============== LAYER 3: NETWORK ================
 # IPv4
 # Header format: 
 #  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
@@ -30,7 +27,6 @@ def unpack_MAC(data):
 # |                       Dst IP (32 bits)                        |
 #  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 # |                 Options if IHL > 5 (32 bits)                  |
-
 def unpack_IPv4(data):
     #unpack the IPv4 header
     version_length, total_length, ttl, protocol, src, dst= struct.unpack('!sx2s4xss2x4s4s',data[:20]) 
@@ -52,9 +48,14 @@ def unpack_IPv4(data):
     #return
     return  version, length_bytes, total_length, ttl, protocol, src, dst, payload
 
+# ARP
+# Header format: 
+def unpack_ARP(data): 
+    #TODO ARP 
+    return 0
 
-# LAYER 4: TRANSPORT 
 
+# ============== LAYER 4: TRANSPORT ================
 # TCP
 # Header format: 
 #  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
@@ -69,6 +70,7 @@ def unpack_IPv4(data):
 # |      Checksum (16 bits)    |         Urgent (16 bits)         |
 def unpack_TCP(data):
     src, dst = struct.unpack('!HH',data[:4])
+    #TODO add more fields
     return src,dst
 
 # UDP

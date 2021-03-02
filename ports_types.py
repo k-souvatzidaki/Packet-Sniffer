@@ -1,3 +1,19 @@
+#Network layer protocol based on MAC Ethertype
+def get_network_prot(ethertype):
+    if(ethertype == int('0800',16)):
+        return "IPv4"
+    if(ethertype == int('0806',16)):
+        return "ARP"
+
+#Transport layer protocol based on IP protocol field
+def get_transport_prot(protocol):
+    if(protocol == '06'):
+        return "TCP"
+    if(protocol == '11'):
+        return "UDP"
+    if(protocol == '02'):
+        return "IGMP"
+
 #IGMP message types
 def IGMP_type(hex):
     if(hex == "11"):
@@ -21,4 +37,5 @@ def IGMP_type(hex):
 
 #TCP ports application layer protocols (well known)
 def TCP_port(port):
+    #TODO add well known ports
     return 0

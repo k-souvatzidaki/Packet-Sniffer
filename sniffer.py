@@ -1,4 +1,4 @@
-import pcap, unpacking
+import pcap, unpacking, ports_types
 
 def main():
     cap = pcap.pcap(None)
@@ -21,7 +21,7 @@ def unpack(packet):
     print "     Source MAC: " + src
 
     # Network Layer
-    net_prot = get_network_prot(ethertype)
+    net_prot = ports_types.get_network_prot(ethertype)
     if(net_prot == "IPv4"): 
         print("Network Layer: IPv4")
         #unpacking IP header
@@ -34,7 +34,7 @@ def unpack(packet):
         print "     Source IP: " + str(src)
 
         # Transport Layer
-        trans_prot = get_transport_prot(protocol)
+        trans_prot = ports_types.get_transport_prot(protocol)
         if(trans_prot == "TCP"):
             print("Transport Layer: TCP")
             src, dst = unpacking.unpack_TCP(payload)
@@ -51,20 +51,8 @@ def unpack(packet):
             version_type, group_addr = unpacking.unpack_IGMP(payload)
             print "     Message Type: " + str(version_type)
             print "     Group Address: " + str(group_addr)
-
-
-def get_network_prot(ethertype):
-    if(ethertype == int('0800',16)):
-        return "IPv4"
-    if(ethertype == int('0806',16)):
-        return "ARP"
-
-def get_transport_prot(protocol):
-    if(protocol == '06'):
-        return "TCP"
-    if(protocol == '11'):
-        return "UDP"
-    if(protocol == '02'):
-        return "IGMP"
+    elif(net_prot == "ARP"): 
+        print("Network Layer: ARP")
+        unpacking.unpack_ARP(mac_data)
 
 main()
