@@ -3,36 +3,57 @@ import pcap, unpacking
 def main():
     cap = pcap.pcap(None)
     print('Listening on %s: %s' % (cap.name, cap.filter))
-    print("============================================================================")
+    print("\n====================================================================================== \n")
     i = 1
     for d, packet in cap:
         print("Packet #"+str(i) +" Length = "+str(len(packet)))
         unpack(packet)
         i = i+1
+        print("\n====================================================================================== \n")
         
 
 def unpack(packet):
-    #unpacking MAC (Ethernet) header
+    #MAC
+    print("Data-Link Layer: MAC")
+    #unpacking MAC header
     dst, src, ethertype, mac_data = unpacking.unpack_MAC(packet)
-    print "Destination MAC: " + dst + ", Source MAC: " + src
-    print("-------------------------------------------------------------------------")
+    print "     Destination MAC: " + dst
+    print "     Source MAC: " + src
 
-    #IPv4
-    if(ethertype == int('0800',16)):
-        print("Network Layer protocol: IPv4")
+    # Network Layer
+    net_prot = get_network_prot(ethertype)
+    if(net_prot == "IPv4"): 
+        print("Network Layer: IPv4")
         #unpacking IP header
         version, length_bytes, total_length, ttl, protocol, src, dst, payload = unpacking.unpack_IPv4(mac_data)
-        print "Version: "+str(version)
-        print "Header length: "+str(length_bytes)+" bytes"
-        print "Total length: "+str(total_length)+ " bytes"
-        print "Time to Live: "+str(ttl)
-        print "Destination IP: " + str(dst)
-        print "Source IP: " + str(src)
+        print "     Version: "+str(version)
+        print "     Header length: "+str(length_bytes)+" bytes"
+        print "     Total length: "+str(total_length)+ " bytes"
+        print "     Time to Live: "+str(ttl)
+        print "     Destination IP: " + str(dst)
+        print "     Source IP: " + str(src)
 
-        #TCP
-        print protocol
-        #if(protocol = int())
+        # Transport Layer
+        trans_prot = get_transport_prot(protocol)
+        if(trans_prot == "TCP"):
+            print("Transport Layer: TCP")
+        if(trans_prot == "UDP"):
+            print("Transport Layer: UDP")
+        if(trans_prot == "IGMP"):
+            print("Transport Layer: IGMP")
+            version_type, group_addr = unpacking.unpack_IGMP(payload)
 
-    print("============================================================================")
+
+def get_network_prot(ethertype):
+    if(ethertype == int('0800',16)):
+        return "IPv4"
+
+def get_transport_prot(protocol):
+    if(protocol == '06'):
+        return "TCP"
+    if(protocol == '11'):
+        return "UDP"
+    if(protocol == '02'):
+        return "IGMP"
 
 main()

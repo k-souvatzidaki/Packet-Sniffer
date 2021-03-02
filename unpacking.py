@@ -54,4 +54,40 @@ def unpack_IPv4(data):
 
 
 # LAYER 4: TRANSPORT 
-#TODO
+
+# TCP
+# Header format: 
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |      Src Port(16 bits)    |        Dst Port (16 bits)         |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |                  Sequence Number (32 bits)                    |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |                    ACK number (32 bits)                       |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# | Data Offset (4)| Reserved&Flags (12)|     Window Size (16)    |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |      Checksum (16 bits)    |         Urgent (16 bits)         |
+def unpack_TCP(data):
+    return 0
+
+# UDP
+# Header format:
+
+def unpack_UDP(data):
+    return 0
+
+# IGMP
+# Header format:
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# | Version/Type (8 bits)| Max Resp (8 bits) | Checksum (16 bits) |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |                   Group Address (32 bits)                     |
+# **Max Resp = Unused in v1
+def unpack_IGMP(data):
+    #unpack the IGMP header
+    version_type, group_addr = struct.unpack('!s3x4s',data[:8]) 
+    #version and type
+    version_type = formatting.b2hex(version_type)
+    #group address
+    group_addr = formatting.IPv4(struct.unpack('{}B'.format(len(group_addr)),group_addr))
+    return version_type,group_addr
