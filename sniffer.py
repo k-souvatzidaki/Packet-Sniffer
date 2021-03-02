@@ -2,26 +2,37 @@ import pcap, unpacking
 
 def main():
     cap = pcap.pcap(None)
-    print('listening on %s: %s' % (cap.name, cap.filter))
-    print("--------------------------------------------------------------------------------------")
-    
-    #Support for IPv4 packets
+    print('Listening on %s: %s' % (cap.name, cap.filter))
+    print("============================================================================")
     i = 1
     for d, packet in cap:
-        #unpacking MAC (Ethernet) header
-        dst, src, ethertype, mac_data = unpacking.unpack_MAC(packet)
-        #print packet length in bytes
         print("Packet #"+str(i) +" Length = "+str(len(packet)))
-        print "Destination MAC: " + dst + ", Source MAC: " + src
-
-
-        if(ethertype == int('0800',16)): #IPv4
-            print("Network Layer protocol: IPv4")
-            #unpacking IP header
-            dst, src = unpacking.unpack_IPv4(mac_data)
-            print "Destination IP: " + str(dst) + ", Source IP: " + str(src)
-        
+        unpack(packet)
         i = i+1
-        print("--------------------------------------------------------------------------------------")
+        
+
+def unpack(packet):
+    #unpacking MAC (Ethernet) header
+    dst, src, ethertype, mac_data = unpacking.unpack_MAC(packet)
+    print "Destination MAC: " + dst + ", Source MAC: " + src
+    print("-------------------------------------------------------------------------")
+
+    #IPv4
+    if(ethertype == int('0800',16)):
+        print("Network Layer protocol: IPv4")
+        #unpacking IP header
+        version, length_bytes, total_length, ttl, protocol, src, dst, payload = unpacking.unpack_IPv4(mac_data)
+        print "Version: "+str(version)
+        print "Header length: "+str(length_bytes)+" bytes"
+        print "Total length: "+str(total_length)+ " bytes"
+        print "Time to Live: "+str(ttl)
+        print "Destination IP: " + str(dst)
+        print "Source IP: " + str(src)
+
+        #TCP
+        print protocol
+        #if(protocol = int())
+
+    print("============================================================================")
 
 main()

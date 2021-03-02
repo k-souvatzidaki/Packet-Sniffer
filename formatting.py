@@ -12,5 +12,5 @@ def IPv4(i):
     return addr
 
 # convert bytes to hexadecimal 
-def hex(i):
+def b2hex(i):
     return binascii.hexlify(i).upper()
