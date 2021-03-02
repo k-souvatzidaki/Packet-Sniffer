@@ -7,8 +7,12 @@ A simple *data-link layer* Ethernet (802.3) **raw** packet sniffer in Python. Us
 - MAC
 ## Network Layer
 - IPv4
+- ARP
 - More to come
 ## Transport Layer
+- TCP
+- UDP
+- IGMP
 - More to come
 
 ## Run
