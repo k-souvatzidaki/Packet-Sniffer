@@ -1,17 +1,15 @@
 # Packet Sniffer
 ## About 
-A simple *data-link layer* Ethernet (802.3) packet sniffer in Python. Using the **PyPCAP** libpcap module ,and *npcap* for Windows 10 compatibility. Unpacking frame headers, starting from data-link, and printing information.
+A simple *data-link layer* Ethernet (802.3) **raw** packet sniffer in Python. Using the **PyPCAP** libpcap module ,and *npcap* for Windows 10 compatibility. Unpacking frame headers, starting from data-link, and printing information.
 
 # Supported Protocols
 ## Data-Link Layer
 - MAC
 ## Network Layer
 - IPv4
-- More to come soon
+- More to come
 ## Transport Layer
-- TODO
-## Application Layer
-- TODO 
+- More to come
 
 ## Run
 ~~~~
@@ -31,3 +29,8 @@ set LIB=%LIB%;c:\WpdPack\Lib
 pushd C:\pypcap-1.x.x //the installed version
 python setup.py install
 ~~~~
+
+## Future Work
+- Support for more protocols
+- Option to save frames in .pcap files
+- GUI
