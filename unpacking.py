@@ -1,4 +1,4 @@
-import struct, binascii, formatting
+import struct, binascii, formatting, ports_types
 
 # LAYER 2 : DATA LINK LAYER 
 
@@ -68,13 +68,19 @@ def unpack_IPv4(data):
 #  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 # |      Checksum (16 bits)    |         Urgent (16 bits)         |
 def unpack_TCP(data):
-    return 0
+    src, dst = struct.unpack('!HH',data[:4])
+    return src,dst
 
 # UDP
 # Header format:
-
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |      Src Port(16 bits)      |       Dst Port (16 bits)        |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |       Length (16 bits)      |       Checksum (16 bits)        |
 def unpack_UDP(data):
-    return 0
+    #unpack the UDP header
+    src, dst,length = struct.unpack('!HHH2x',data[:8])
+    return src,dst,length
 
 # IGMP
 # Header format:
@@ -90,4 +96,4 @@ def unpack_IGMP(data):
     version_type = formatting.b2hex(version_type)
     #group address
     group_addr = formatting.IPv4(struct.unpack('{}B'.format(len(group_addr)),group_addr))
-    return version_type,group_addr
+    return ports_types.IGMP_type(version_type),group_addr

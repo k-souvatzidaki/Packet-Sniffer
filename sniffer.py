@@ -37,11 +37,20 @@ def unpack(packet):
         trans_prot = get_transport_prot(protocol)
         if(trans_prot == "TCP"):
             print("Transport Layer: TCP")
+            src, dst = unpacking.unpack_TCP(payload)
+            print "     Source port: " + str(src)
+            print "     Destination port: " + str(dst)
         if(trans_prot == "UDP"):
             print("Transport Layer: UDP")
+            src,dst,length = unpacking.unpack_UDP(payload)
+            print "     Source port: " + str(src)
+            print "     Destination port: " + str(dst)
+            print "     Length: " + str(length)
         if(trans_prot == "IGMP"):
             print("Transport Layer: IGMP")
             version_type, group_addr = unpacking.unpack_IGMP(payload)
+            print "     Message Type: " + str(version_type)
+            print "     Group Address: " + str(group_addr)
 
 
 def get_network_prot(ethertype):
