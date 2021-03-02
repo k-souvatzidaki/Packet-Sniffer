@@ -47,6 +47,8 @@ def unpack(packet):
 def get_network_prot(ethertype):
     if(ethertype == int('0800',16)):
         return "IPv4"
+    if(ethertype == int('0806',16)):
+        return "ARP"
 
 def get_transport_prot(protocol):
     if(protocol == '06'):
