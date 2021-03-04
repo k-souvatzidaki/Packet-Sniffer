@@ -37,7 +37,7 @@ def unpack(packet):
         trans_prot = ports_types.get_transport_prot(protocol)
         if(trans_prot == "TCP"):
             print("Transport Layer: TCP")
-            src, dst = unpacking.unpack_TCP(payload)
+            src,dst,seqnum,acknum,offset,syn,ack,fin,window,app_payload = unpacking.unpack_TCP(payload)
             print "     Source port: " + str(src)
             print "     Destination port: " + str(dst)
             app_prot_src = ports_types.port_protocol(src)
@@ -46,6 +46,13 @@ def unpack(packet):
                 print "     Application Layer Protocol: " + str(app_prot_dst)
             elif(app_prot_src != "None"):
                  print "     Application Layer Protocol: " + str(app_prot_src)
+            print "     Sequence Number: " + str(seqnum)
+            print "     SYN: " + str(syn)
+            print "     FIN: " + str(fin)
+            print "     ACK: " + str(ack)
+            print "     Acknowledgement Number: " + str(acknum)
+            print "     Header Length: " + str(offset) +" bytes"
+            print "     Window: " + str(window)
         if(trans_prot == "UDP"):
             print("Transport Layer: UDP")
             src,dst,length = unpacking.unpack_UDP(payload)

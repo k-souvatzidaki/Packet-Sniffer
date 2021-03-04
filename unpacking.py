@@ -69,9 +69,23 @@ def unpack_ARP(data):
 #  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 # |      Checksum (16 bits)    |         Urgent (16 bits)         |
 def unpack_TCP(data):
-    src, dst = struct.unpack('!HH',data[:4])
+    src, dst, seqnum, acknum, offset,flags,window = struct.unpack('!HHIIssH',data[:16])
     #TODO add more fields
-    return src,dst
+    offset = int(str(formatting.b2hex(offset))[0],16) * 4
+    flags = bin(int(str(formatting.b2hex(flags)),16)).lstrip('0b')
+    if(len(flags) < 5):
+        ack = "0"
+    else:
+        ack = flags[len(flags)-5]
+    if(len(flags) < 2):
+        syn = "0"
+    else:
+        syn = flags[len(flags)-2]
+    if(len(flags) == 0):
+        fin = "0"
+    else: 
+        fin = flags[len(flags)-1]
+    return src,dst,seqnum,acknum,offset,syn,ack,fin,window,data[offset:]
 
 # UDP
 # Header format:
