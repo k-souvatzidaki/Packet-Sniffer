@@ -40,12 +40,24 @@ def unpack(packet):
             src, dst = unpacking.unpack_TCP(payload)
             print "     Source port: " + str(src)
             print "     Destination port: " + str(dst)
+            app_prot_src = ports_types.port_protocol(src)
+            app_prot_dst = ports_types.port_protocol(dst)
+            if(app_prot_dst != "None"):
+                print "     Application Layer Protocol: " + str(app_prot_dst)
+            elif(app_prot_src != "None"):
+                 print "     Application Layer Protocol: " + str(app_prot_src)
         if(trans_prot == "UDP"):
             print("Transport Layer: UDP")
             src,dst,length = unpacking.unpack_UDP(payload)
             print "     Source port: " + str(src)
             print "     Destination port: " + str(dst)
             print "     Length: " + str(length)
+            app_prot_src = ports_types.port_protocol(src)
+            app_prot_dst = ports_types.port_protocol(dst)
+            if(app_prot_dst != "None"):
+                print "     Application Layer Protocol: " + str(app_prot_dst)
+            elif(app_prot_src != "None"):
+                 print "     Application Layer Protocol: " + str(app_prot_src)
         if(trans_prot == "IGMP"):
             print("Transport Layer: IGMP")
             version_type, group_addr = unpacking.unpack_IGMP(payload)

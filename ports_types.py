@@ -35,7 +35,61 @@ def IGMP_type(hex):
     elif(hex == "22"):
         return "IGMPv3 Membership Report"
 
-#TCP ports application layer protocols (well known)
-def TCP_port(port):
-    #TODO add well known ports
-    return 0
+#TCP/UDP ports application layer protocols (well-known)
+def port_protocol(port):
+    #most popular well-known ports
+    if(port == 20):
+        return "File Transfer Protocol (FTP) data"
+    elif(port == 21):
+        return "File Transfer Protocol (FTP) control"
+    elif(port == 22):
+        return "Secure Shell Protocol (SSH)"
+    elif(port == 23):
+        return "Telnet Protocol"
+    elif(port == 25):
+        return "Simple Mail Transfer Protocol (SMTP)"
+    elif(port == 53):
+        return "Domain Name System(DNS) Protocol"
+    elif(port == 67):
+        return "Bootstrap Protocol (BOOTP) Server / Dynamic Host Configuration Protocol (DHCP)"
+    elif(port == 68):
+        return "Bootstrap Protocol (BOOTP) Client / Dynamic Host Configuration Protocol (DHCP)"
+    elif(port == 69):
+        return "Trivial File Transfer Protocol (TFTP)"
+    elif(port == 80):
+        return "Hypertext Transfer Protocol (HTTP)"
+    elif(port == 110):
+        return "Post Office Protocol (POP3)"
+    elif(port == 115):
+        return "Simple File Transfer Protocol["
+    elif(port == 118 or port == 156):
+        return "Structured Query Language (SQL) Services"
+    elif(port == 119):
+        return "Network News Transfer Protocol (NNTP)"
+    elif(port == 123):
+        return "Network Time Protocol (NTP)"
+    elif(port == 143):
+        return "Internet Message Access Protocol (IMAP) Management of Digital Mail"
+    elif(port == 158):
+        return "Distributed Mail System Protocol (DMSP)"
+    elif(port == 121):
+        return "Simple Network Management Protocol (SNMP)"
+    elif(port == 194):
+        return "Internet Relay Chat (IRC)"
+    elif(port == 209):
+        return "Quick Mail Transfer Protocol["
+    elif(port == 220):
+        return "Internet Message Access Protocol (IMAPv3)"
+    elif(port == 319):
+        return "Precision Time Protocol (PTP) Event"
+    elif(port == 320):
+        return "Precision Time Protocol (PTP) General"
+    elif(port == 389):
+        return "Lightweight Directory Access Protocol (LDAP)"
+    elif(port == 401):
+        return "Uninterruptible power supply (UPS)"
+    elif(port == 427):
+        return "Service Location Protocol (SLP)"
+    elif(port == 443):
+        return "Hypertext Transfer Protocol Secure (HTTPS)"
+    return "None"
