@@ -50,9 +50,26 @@ def unpack_IPv4(data):
 
 # ARP
 # Header format: 
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |      Hardware(16 bits)    |       Ethertype (16 bits)         |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# | HLength(8 bits) | PLength(8 bits) |    Operation (16 bits)    |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |                     Sender MAC (48 bits)                      |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |                      Sender IP (32 bits)                      |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |                     Target MAC (48 bits)                      |
+#  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+# |                      Target IP (32 bits)                      |
 def unpack_ARP(data): 
-    #TODO ARP 
-    return 0
+    hardware_type, ethertype, operation, src_mac, src_ip, dst_mac, dst_ip = struct.unpack('!2s2s2x2s6s4s6s4s',data[:28]) 
+    src_mac = formatting.MAC(formatting.b2hex(src_mac))
+    dst_mac = formatting.MAC(formatting.b2hex(dst_mac))
+    src_ip = formatting.IPv4(struct.unpack('{}B'.format(len(src_ip)),src_ip))
+    dst_ip = formatting.IPv4(struct.unpack('{}B'.format(len(dst_ip)),dst_ip))
+    #TODO more fields
+    return src_mac,dst_mac,src_ip,dst_ip
 
 
 # ============== LAYER 4: TRANSPORT ================

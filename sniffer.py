@@ -72,6 +72,10 @@ def unpack(packet):
             print "     Group Address: " + str(group_addr)
     elif(net_prot == "ARP"): 
         print("Network Layer: ARP")
-        unpacking.unpack_ARP(mac_data)
+        src_mac,dst_mac,src_ip,dst_ip = unpacking.unpack_ARP(mac_data)
+        print "     Source MAC: " + src_mac
+        print "     Source IP: " + src_ip
+        print "     Destination MAC: " + dst_mac
+        print "     Destination IP: " + dst_ip
 
 main()
