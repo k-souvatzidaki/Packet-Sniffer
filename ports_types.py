@@ -4,6 +4,7 @@ def get_network_prot(ethertype):
         return "IPv4"
     if(ethertype == int('0806',16)):
         return "ARP"
+    return "x"
 
 #Transport layer protocol based on IP protocol field
 def get_transport_prot(protocol):
@@ -13,6 +14,7 @@ def get_transport_prot(protocol):
         return "UDP"
     if(protocol == '02'):
         return "IGMP"
+    return "x"
 
 #IGMP message types
 def IGMP_type(hex):
@@ -34,6 +36,7 @@ def IGMP_type(hex):
         return "Multicast Traceroute"
     elif(hex == "22"):
         return "IGMPv3 Membership Report"
+    return "x"
 
 #TCP/UDP ports application layer protocols (well-known)
 def port_protocol(port):
@@ -93,3 +96,19 @@ def port_protocol(port):
     elif(port == 443):
         return "Hypertext Transfer Protocol Secure (HTTPS)"
     return "None"
+
+def ARP_HTYPE(hardware_type):
+    if(hardware_type == 1):
+        return "Ethernet"
+    elif(hardware_type == 2):
+        return "Experimental Ethernet"
+    elif(hardware_type == 1):
+        return "IEEE 802"
+    return "x"
+
+def ARP_OPERATION(operation):
+    if(operation == 1):
+        return "Request"
+    elif(operation == 2):
+        return "Reply"
+    return "x"

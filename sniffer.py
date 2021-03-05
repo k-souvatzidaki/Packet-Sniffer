@@ -68,14 +68,17 @@ def unpack(packet):
         if(trans_prot == "IGMP"):
             print("Transport Layer: IGMP")
             version_type, group_addr = unpacking.unpack_IGMP(payload)
-            print "     Message Type: " + str(version_type)
+            print "     Message Type: " + version_type
             print "     Group Address: " + str(group_addr)
     elif(net_prot == "ARP"): 
         print("Network Layer: ARP")
-        src_mac,dst_mac,src_ip,dst_ip = unpacking.unpack_ARP(mac_data)
+        src_mac,dst_mac,src_ip,dst_ip,htype,optype,ether = unpacking.unpack_ARP(mac_data)
         print "     Source MAC: " + src_mac
         print "     Source IP: " + src_ip
         print "     Destination MAC: " + dst_mac
         print "     Destination IP: " + dst_ip
+        print "     Hardware Type: " + htype
+        print "     Operation: " + optype
+        print "     Ethertype: " + ether
 
 main()

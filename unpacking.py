@@ -68,8 +68,10 @@ def unpack_ARP(data):
     dst_mac = formatting.MAC(formatting.b2hex(dst_mac))
     src_ip = formatting.IPv4(struct.unpack('{}B'.format(len(src_ip)),src_ip))
     dst_ip = formatting.IPv4(struct.unpack('{}B'.format(len(dst_ip)),dst_ip))
-    #TODO more fields
-    return src_mac,dst_mac,src_ip,dst_ip
+    htype = ports_types.ARP_HTYPE(int(formatting.b2hex(hardware_type),16))
+    optype = ports_types.ARP_OPERATION(int(formatting.b2hex(operation),16))
+    ether = ports_types.get_network_prot(int(formatting.b2hex(ethertype),16))
+    return src_mac,dst_mac,src_ip,dst_ip,htype,optype,ether
 
 
 # ============== LAYER 4: TRANSPORT ================
