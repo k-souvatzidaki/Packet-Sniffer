@@ -31,8 +31,3 @@ set LIB=%LIB%;c:\WpdPack\Lib
 pushd C:\pypcap-1.x.x //the installed version
 python setup.py install
 ~~~~
-
-## Future Work
-- Support for more protocols
-- Option to save frames in .pcap files
-- GUI
